@@ -8,7 +8,32 @@ const App = () => {
   const [projectState, setProjectState] = useState({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  const addTaskHandler = (text) => {
+    setProjectState(prevState => {
+      const taskId = Math.random();
+      const newTask = {
+        text: text,
+        projectId: prevState.selectedProjectId,
+        id: taskId,
+      };
+      return {
+        ...prevState,
+        tasks: [newTask, ...prevState.tasks]
+      };
+    });
+  }
+
+  const deleteTaskHandler = (id) => {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter(task => task.id !== id),
+      };
+    });
+  }
 
   const startAddProjectHandler = () => {
     setProjectState(prevState => {
@@ -21,9 +46,10 @@ const App = () => {
 
   const addProjectHandler = (projectData) => {
     setProjectState(prevState => {
+      const projectId = Math.random();
       const newProject = {
         ...projectData,
-        id: Math.random(),
+        id: projectId,
       };
       return {
         ...prevState,
@@ -62,7 +88,13 @@ const App = () => {
   }
 
   const selectedProject = projectState.projects.find(project => project.id === projectState.selectedProjectId)
-  let content = <SelectedProject project={selectedProject} onDeleteProject={deleteProjectHandler}/>;
+  let content = <SelectedProject
+    project={selectedProject}
+    onDeleteProject={deleteProjectHandler}
+    onAddTask={addTaskHandler}
+    onDeleteTask={deleteTaskHandler}
+    tasks={projectState.tasks}
+  />;
   if (projectState.selectedProjectId === null) {
     content = <NewProject onAddProject={addProjectHandler} onCancel={cancelAddProject} />;
   } else if (projectState.selectedProjectId === undefined) {
@@ -75,6 +107,7 @@ const App = () => {
         onStartAddProject={startAddProjectHandler}
         projects={projectState.projects}
         onSelectProject={selectProjectHandler}
+        selectedProjectId={projectState.selectedProjectId}
       />
       {content}
     </main>

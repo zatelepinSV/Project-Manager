@@ -51,8 +51,18 @@ const App = () => {
     });
   }
 
+  const deleteProjectHandler = () => {
+    setProjectState(prevState => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(project => project.id !== prevState.selectedProjectId),
+      };
+    });
+  }
+
   const selectedProject = projectState.projects.find(project => project.id === projectState.selectedProjectId)
-  let content = <SelectedProject project={selectedProject}/>;
+  let content = <SelectedProject project={selectedProject} onDeleteProject={deleteProjectHandler}/>;
   if (projectState.selectedProjectId === null) {
     content = <NewProject onAddProject={addProjectHandler} onCancel={cancelAddProject} />;
   } else if (projectState.selectedProjectId === undefined) {
@@ -64,7 +74,8 @@ const App = () => {
       <ProjectSidebar
         onStartAddProject={startAddProjectHandler}
         projects={projectState.projects}
-        onSelectProject={selectProjectHandler}/>
+        onSelectProject={selectProjectHandler}
+      />
       {content}
     </main>
   );

@@ -26,8 +26,9 @@ export const ProjectSidebar = (
           return <li key={project.id}>
             <button
               className={cssClasses}
-              onClick={onSelectProject}
-            >{project.title}</button>
+              onClick={() => onSelectProject(project.id)}
+            >{project.title}
+            </button>
           </li>
         })}
       </ul>

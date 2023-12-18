@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ProjectContext } from "../../store/project-context";
 
-export const NewTask = ({ onAdd }) => {
+export const NewTask = () => {
 const [enteredTask, setEnteredTask] = useState('');
+const { addTask } = useContext(ProjectContext);
 
 const changeHandler = (event) => {
   setEnteredTask(event.target.value);
@@ -11,7 +13,7 @@ const clickHandler = () => {
   if (enteredTask.trim() === '') {
     return;
   }
-  onAdd(enteredTask);
+  addTask(enteredTask);
   setEnteredTask('');
 }
 

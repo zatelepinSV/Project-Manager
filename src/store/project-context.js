@@ -11,7 +11,7 @@ const projectReducer = (state, action) => {
       };
       return {
         ...state,
-        tasks: [newTask, ...state.tasks]
+        tasks: [newTask, ...state.tasks],
       };
     case 'DELETE_TASK':
       return {
@@ -59,8 +59,7 @@ export const ProjectContext = createContext({
   selectedProjectId: undefined,
   projects: [],
   tasks: [],
-  addTask: () => {
-  },
+  addTask: () => {},
   deleteTask: () => {
   },
   startAddProject: () => {
@@ -106,7 +105,6 @@ export const ProjectContextProvider = ({children}) => {
   };
 
   const addProjectHandler = (projectData) => {
-    console.log(projectData)
     projectStateDispatch({
       type: 'ADD_PROJECT',
       payload: projectData,

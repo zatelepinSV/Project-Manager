@@ -1,17 +1,17 @@
 import { NewTask } from "../NewTask";
 import { useContext, useRef } from "react";
 import { ProjectContext } from "../../store/project-context";
-import { DeleteTaskModal } from "../DeleteTaskModal";
+import { Modal } from "../Modal";
 
 export const Tasks = () => {
   const { tasks, deleteTask, selectedProjectId } = useContext(ProjectContext);
   const onDeleteTask = useRef();
-  const task = useRef();
+  const taskId = useRef();
   const projectTasks = tasks.filter(item => item.projectId === selectedProjectId);
 
   const showModal = (id) => {
     onDeleteTask.current.open();
-    task.current = id;
+    taskId.current = id;
   }
   const handleStop = () => {
     onDeleteTask.current.close();
@@ -19,12 +19,17 @@ export const Tasks = () => {
 
   const handleRemove = () => {
     onDeleteTask.current.close();
-    deleteTask(task.current);
+    deleteTask(taskId.current);
   }
 
   return (
     <section>
-      <DeleteTaskModal ref={onDeleteTask} onCancel={handleStop} onConfirm={handleRemove} />
+      <Modal ref={onDeleteTask} stopRemove={handleStop} remove={handleRemove}>
+        <div className='text-right'>
+          <h2 className='text-xl font-bold text-stone-700 my-4'>Are you sure?</h2>
+          <p className='my-4'>Do you really want to remove this Task?</p>
+        </div>
+      </Modal>
       <h2 className='text-2xl font-bold text-stone-700 mb-4'>Tasks</h2>
       <NewTask />
       {projectTasks.length === 0 && <p className='text-stone-800 my-4'>This project does not have any tasks yet.</p>}

@@ -28,13 +28,13 @@ export const Modal = forwardRef ((
         {remove ? (
           <>
             <Button
-              onClick={stopRemove}
-              className="px-4 py-2 mx-1 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
-            >No</Button>
-            <Button
               onClick={remove}
               className="px-4 py-2 mx-1 text-xs md:text-base rounded-md bg-stone-700 text-red-400 hover:bg-red-600 hover:text-stone-100"
             >Yes</Button>
+            <Button
+              onClick={stopRemove}
+              className="px-4 py-2 mx-1 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
+            >No</Button>
           </>
         ) : (<Button className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
         >{buttonCaption}</Button>)}

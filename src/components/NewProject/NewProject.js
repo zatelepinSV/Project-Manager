@@ -1,7 +1,6 @@
-import {useRef, useContext, useReducer, useState, useEffect } from "react";
+import { useRef, useContext, useReducer, useState, useEffect } from "react";
 import { ProjectContext } from "../../store/project-context";
 import { Input } from "../Input";
-import {logDOM} from "@testing-library/react";
 
 const titleReducer = (state, action) => {
   if (action.type === 'USER_INPUT') {

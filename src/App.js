@@ -4,13 +4,17 @@ import { NewProject } from "./components/NewProject";
 import { NoProjectSelected } from "./components/NoProjectSelected";
 import { SelectedProject } from "./components/SelectedProject";
 import { ProjectContext } from "./store/project-context";
+import { NewProjectContextProvider } from "./store/new-project-context";
 
 const App = () => {
   const { projects, selectedProjectId } = useContext(ProjectContext);
   const selectedProject = projects.find(project => project.id === selectedProjectId);
   let content = <SelectedProject project={selectedProject} />;
   if (selectedProjectId === null) {
-    content = <NewProject />;
+    content =
+    <NewProjectContextProvider>
+      <NewProject />
+    </NewProjectContextProvider>;
   } else if (selectedProjectId === undefined) {
     content = <NoProjectSelected />;
   }
